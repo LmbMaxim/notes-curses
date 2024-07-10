@@ -1,9 +1,18 @@
+import os
 import argparse
 import curses
 from curses.textpad import Textbox
 
-from models import Note
 
+from models import Note
+from data import put_taste_data
+
+
+
+# create tase db 
+if os.path.exists('db') == False:
+    os.mknod('db')
+    put_taste_data()
 
 
 Note.load_db()
@@ -36,11 +45,6 @@ def take_note():
     #     print(Note.get(args.note_id_edit)) 
     #     n = Note.edit(args.note_id_edit)
     # return 0
-#
-
-# title, content = 'article', 'lorumipsum'
-# print(Note.update(id_=4, title=title, content=content))
-
 
 
 
@@ -109,6 +113,5 @@ def main(stdscr):
         elif c == ord('e'):
             render_edit_win()
             
-# print(Note.get(0).content)
 curses.wrapper(main)
 Note.write_db()
